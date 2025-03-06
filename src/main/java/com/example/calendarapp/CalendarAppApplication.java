@@ -1,9 +1,12 @@
 package com.example.calendarapp;
 
 import com.example.calendarapp.event.*;
+import com.example.calendarapp.reader.EventCsvReader;
+import com.opencsv.exceptions.CsvException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,10 +16,11 @@ import java.util.stream.Collectors;
 @SpringBootApplication
 public class CalendarAppApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, CsvException {
         Schedule schedule = new Schedule();
 
-        HashSet<String> participants = new HashSet<String>();
+        // 개별 추가
+/*        HashSet<String> participants = new HashSet<String>();
         participants.add("paul.jo");
 
         Meeting meeting1 = new Meeting(
@@ -41,7 +45,14 @@ public class CalendarAppApplication {
                 "할일 적기"
         );
 
-        schedule.add(todo1);
+        schedule.add(todo1);*/
+
+        // csv 파일로 추가
+        EventCsvReader csvReader = new EventCsvReader();
+        String meetingCsvPath = "/data/meeting.csv";
+
+        List<Meeting> meetings = csvReader.readMeetings(meetingCsvPath);
+        meetings.forEach(schedule::add);
 
         schedule.printAll();
 
