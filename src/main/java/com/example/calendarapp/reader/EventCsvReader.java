@@ -20,11 +20,17 @@ import java.util.HashSet;
 import java.util.List;
 
 public class EventCsvReader {
+    private final RawCsvReader rawCsvReader;
+
+    public EventCsvReader(RawCsvReader rawCsvReader){
+        this.rawCsvReader = rawCsvReader;
+    }
+
     public List<Meeting> readMeetings(String path) throws IOException, CsvException {
         List<Meeting> result = new ArrayList<>();
 
         // 데이터를 읽는 부분
-        List<String[]> read = readAll(path);
+        List<String[]> read = rawCsvReader.readAll(path);
         for(int i = 0; i < read.size(); i++){
             if(skipHeader(i)){
                 continue;
@@ -66,14 +72,6 @@ public class EventCsvReader {
 
     private static boolean skipHeader(int i) {
         return i == 0;
-    }
-
-    private List<String[]> readAll(String path) throws IOException, CsvException {
-        InputStream in = getClass().getResourceAsStream(path);
-        InputStreamReader reader = new InputStreamReader(in, StandardCharsets.UTF_8);
-
-        CSVReader csvReader = new CSVReader(reader);
-        return csvReader.readAll();
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.calendarapp;
 import com.example.calendarapp.event.*;
 import com.example.calendarapp.event.update.UpdateMeeting;
 import com.example.calendarapp.reader.EventCsvReader;
+import com.example.calendarapp.reader.RawCsvReader;
 import com.opencsv.exceptions.CsvException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -49,7 +50,7 @@ public class CalendarAppApplication {
         schedule.add(todo1);*/
 
         // csv 파일로 추가
-        EventCsvReader csvReader = new EventCsvReader();
+        EventCsvReader csvReader = new EventCsvReader(new RawCsvReader());
         String meetingCsvPath = "/data/meeting.csv";
 
         List<Meeting> meetings = csvReader.readMeetings(meetingCsvPath);
