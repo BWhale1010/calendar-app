@@ -24,6 +24,7 @@ repositories {
 }
 
 dependencies {
+    implementation group: 'com.opencsv', name: 'opencsv', version: '5.7.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
